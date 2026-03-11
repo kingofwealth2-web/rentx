@@ -71,14 +71,12 @@ export default function LandlordDashboard() {
         <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1a2e1a', margin: 0, cursor: 'pointer' }} onClick={() => router.push('/')}>RentX</h1>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
           <span style={{ color: '#666' }}>👋 {user?.name}</span>
-          <button onClick={() => router.push('/profile')} style={{ padding: '0.5rem 1.25rem', border: '2px solid #ddd', borderRadius: '8px', background: 'transparent', cursor: 'pointer' }}>Profile</button>
-          <button onClick={handleSignOut} style={{ padding: '0.5rem 1.25rem', border: '2px solid #ddd', borderRadius: '8px', background: 'transparent', cursor: 'pointer' }}>Sign Out</button>
+          <button onClick={() => router.push('/profile')} style={{ padding: '0.5rem 1.25rem', border: '2px solid #2d5a2d', borderRadius: '8px', background: 'transparent', color: '#2d5a2d', fontWeight: 'bold', cursor: 'pointer' }}>Profile</button>
+          <button onClick={handleSignOut} style={{ padding: '0.5rem 1.25rem', border: '2px solid #1a2e1a', borderRadius: '8px', background: 'transparent', color: '#1a2e1a', fontWeight: 'bold', cursor: 'pointer' }}>Sign Out</button>
         </div>
       </nav>
 
       <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '2.5rem 2rem' }}>
-
-        {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <h2 style={{ fontSize: '1.75rem', fontWeight: 'bold', color: '#1a2e1a', margin: 0 }}>My Listings</h2>
@@ -89,7 +87,6 @@ export default function LandlordDashboard() {
           </button>
         </div>
 
-        {/* Listings Grid */}
         {listings.length === 0 ? (
           <div style={{ background: 'white', borderRadius: '12px', padding: '4rem', textAlign: 'center', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
             <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🏠</div>
@@ -134,7 +131,6 @@ export default function LandlordDashboard() {
           </div>
         )}
 
-        {/* Interests Section */}
         <div>
           <h2 style={{ fontSize: '1.75rem', fontWeight: 'bold', color: '#1a2e1a', marginBottom: '1.5rem' }}>Tenant Interests</h2>
           {interests.length === 0 ? (

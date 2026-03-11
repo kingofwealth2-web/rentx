@@ -39,17 +39,17 @@ export default function TenantDashboard() {
 
   return (
     <div style={{ fontFamily: 'Georgia, serif', background: '#f8f5f0', minHeight: '100vh' }}>
-      <nav style={{ background: 'white', padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+      <nav style={{ background: 'white', padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', flexWrap: 'wrap', gap: '1rem' }}>
         <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1a2e1a', margin: 0, cursor: 'pointer' }} onClick={() => router.push('/')}>RentX</h1>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
           <span style={{ color: '#666' }}>👋 {user?.name}</span>
           <button onClick={() => router.push('/')} style={{ padding: '0.5rem 1.25rem', border: '2px solid #2d5a2d', borderRadius: '8px', background: 'transparent', color: '#2d5a2d', fontWeight: 'bold', cursor: 'pointer' }}>Browse Listings</button>
-          <button onClick={handleSignOut} style={{ padding: '0.5rem 1.25rem', border: '2px solid #ddd', borderRadius: '8px', background: 'transparent', cursor: 'pointer' }}>Sign Out</button>
+          <button onClick={() => router.push('/profile')} style={{ padding: '0.5rem 1.25rem', border: '2px solid #2d5a2d', borderRadius: '8px', background: 'transparent', color: '#2d5a2d', fontWeight: 'bold', cursor: 'pointer' }}>Profile</button>
+          <button onClick={handleSignOut} style={{ padding: '0.5rem 1.25rem', border: '2px solid #1a2e1a', borderRadius: '8px', background: 'transparent', color: '#1a2e1a', fontWeight: 'bold', cursor: 'pointer' }}>Sign Out</button>
         </div>
       </nav>
 
       <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '2.5rem 2rem' }}>
-
         <div style={{ marginBottom: '2rem' }}>
           <h2 style={{ fontSize: '1.75rem', fontWeight: 'bold', color: '#1a2e1a', margin: 0 }}>My Interests</h2>
           <p style={{ color: '#666', margin: '0.25rem 0 0' }}>Properties you have expressed interest in</p>
@@ -66,7 +66,7 @@ export default function TenantDashboard() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
             {interests.map(interest => (
               <div key={interest.id} onClick={() => router.push(`/listings/${interest.listings?.id}`)}
-                style={{ background: 'white', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.07)', cursor: 'pointer' }}
+                style={{ background: 'white', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.07)', cursor: 'pointer', transition: 'transform 0.2s' }}
                 onMouseEnter={e => (e.currentTarget.style.transform = 'translateY(-4px)')}
                 onMouseLeave={e => (e.currentTarget.style.transform = 'translateY(0)')}>
                 <div style={{ height: '180px', background: '#e8e0d5', overflow: 'hidden' }}>

@@ -66,7 +66,7 @@ export default function ProfilePage() {
             style={{ padding: '0.5rem 1.25rem', border: '2px solid #2d5a2d', borderRadius: '8px', background: 'transparent', color: '#2d5a2d', fontWeight: 'bold', cursor: 'pointer' }}>
             Dashboard
           </button>
-          <button onClick={handleSignOut} style={{ padding: '0.5rem 1.25rem', border: '2px solid #ddd', borderRadius: '8px', background: 'transparent', cursor: 'pointer' }}>Sign Out</button>
+          <button onClick={handleSignOut} style={{ padding: '0.5rem 1.25rem', border: '2px solid #1a2e1a', borderRadius: '8px', background: 'transparent', color: '#1a2e1a', fontWeight: 'bold', cursor: 'pointer' }}>Sign Out</button>
         </div>
       </nav>
 
@@ -74,10 +74,8 @@ export default function ProfilePage() {
         <h2 style={{ fontSize: '1.75rem', fontWeight: 'bold', color: '#1a2e1a', marginBottom: '2rem' }}>My Profile</h2>
 
         <div style={{ background: 'white', borderRadius: '12px', padding: '2rem', boxShadow: '0 2px 12px rgba(0,0,0,0.07)' }}>
-
-          {/* Avatar */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
-            <div style={{ width: '70px', height: '70px', borderRadius: '50%', background: '#2d5a2d', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', fontSize: '1.75rem' }}>
+            <div style={{ width: '70px', height: '70px', borderRadius: '50%', background: '#2d5a2d', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold', fontSize: '1.75rem', flexShrink: 0 }}>
               {name?.[0]?.toUpperCase() || '?'}
             </div>
             <div>
@@ -87,19 +85,16 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* Email - read only */}
           <div style={{ marginBottom: '1rem' }}>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: '#333' }}>Email</label>
             <input value={user?.email} disabled style={{ ...inputStyle, background: '#f5f5f5', color: '#999', cursor: 'not-allowed' }} />
           </div>
 
-          {/* Name */}
           <div style={{ marginBottom: '1rem' }}>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: '#333' }}>Full Name</label>
             <input value={name} onChange={e => setName(e.target.value)} placeholder="Your full name" style={inputStyle} />
           </div>
 
-          {/* Phone */}
           <div style={{ marginBottom: '1.5rem' }}>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: '#333' }}>Phone Number</label>
             <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="Your phone number" style={inputStyle} />

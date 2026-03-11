@@ -47,7 +47,6 @@ export default function HomePage() {
   return (
     <div style={{ fontFamily: 'Georgia, serif', background: '#f8f5f0', minHeight: '100vh' }}>
 
-      {/* Navbar */}
       <nav style={{ background: 'white', padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', flexWrap: 'wrap', gap: '1rem' }}>
         <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1a2e1a', margin: 0 }}>RentX</h1>
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
@@ -61,12 +60,12 @@ export default function HomePage() {
               </button>
               <button
                 onClick={() => router.push('/profile')}
-                style={{ padding: '0.5rem 1.25rem', border: '2px solid #ddd', borderRadius: '8px', background: 'transparent', cursor: 'pointer' }}>
+                style={{ padding: '0.5rem 1.25rem', border: '2px solid #2d5a2d', borderRadius: '8px', background: 'transparent', color: '#2d5a2d', fontWeight: 'bold', cursor: 'pointer' }}>
                 Profile
               </button>
               <button
                 onClick={handleSignOut}
-                style={{ padding: '0.5rem 1.25rem', border: '2px solid #ddd', borderRadius: '8px', background: 'transparent', cursor: 'pointer' }}>
+                style={{ padding: '0.5rem 1.25rem', border: '2px solid #1a2e1a', borderRadius: '8px', background: 'transparent', color: '#1a2e1a', fontWeight: 'bold', cursor: 'pointer' }}>
                 Sign Out
               </button>
             </>
@@ -79,7 +78,6 @@ export default function HomePage() {
         </div>
       </nav>
 
-      {/* Hero */}
       <div style={{ background: 'linear-gradient(135deg, #1a2e1a 0%, #2d5a2d 100%)', padding: '5rem 2rem', textAlign: 'center', color: 'white' }}>
         <h2 style={{ fontSize: '3rem', fontWeight: 'bold', marginBottom: '1rem', lineHeight: 1.2, marginTop: 0 }}>Find Your Next Home</h2>
         <p style={{ fontSize: '1.2rem', marginBottom: '2.5rem', opacity: 0.85 }}>The easiest way to find and list rental homes in your city</p>
@@ -97,7 +95,6 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Listings */}
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '3rem 2rem' }}>
         <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1a2e1a', marginBottom: '1.5rem' }}>
           {filtered.length > 0 ? `${filtered.length} Available ${filtered.length === 1 ? 'Property' : 'Properties'}` : 'No listings yet'}
@@ -127,7 +124,6 @@ export default function HomePage() {
           ))}
         </div>
 
-        {/* How it works */}
         <div style={{ marginTop: '5rem', textAlign: 'center' }}>
           <h3 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#1a2e1a', marginBottom: '3rem' }}>How RentX Works</h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '2rem' }}>
@@ -145,7 +141,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Landlord CTA */}
         {!user && (
           <div style={{ marginTop: '4rem', background: 'linear-gradient(135deg, #1a2e1a 0%, #2d5a2d 100%)', borderRadius: '16px', padding: '3rem', textAlign: 'center', color: 'white' }}>
             <h3 style={{ fontSize: '1.75rem', fontWeight: 'bold', marginBottom: '1rem', marginTop: 0 }}>Are you a landlord?</h3>
