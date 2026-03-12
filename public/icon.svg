@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Dark green rounded background -->
+  <rect width="512" height="512" rx="110" fill="#1a2e1a"/>
+  <!-- Chimney -->
+  <rect x="306" y="108" width="36" height="62" rx="8" fill="#4ade80"/>
+  <!-- Roof triangle -->
+  <polygon points="256,88 398,214 114,214" fill="#4ade80"/>
+  <!-- House body -->
+  <rect x="148" y="202" width="216" height="178" rx="10" fill="#4ade80"/>
+  <!-- Door -->
+  <rect x="214" y="278" width="84" height="102" rx="12" fill="#1a2e1a"/>
+</svg>
