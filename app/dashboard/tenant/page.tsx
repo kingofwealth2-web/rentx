@@ -9,6 +9,7 @@ export default function TenantDashboard() {
   const [interests, setInterests] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     getUser()
@@ -53,148 +54,170 @@ export default function TenantDashboard() {
       <style>{`
         @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
         .interest-card { transition: box-shadow 0.2s, transform 0.2s; }
         .interest-card:hover { box-shadow: 0 12px 36px rgba(0,0,0,0.1) !important; transform: translateY(-3px); }
+        @media (max-width: 640px) {
+          .nav-desktop { display: none !important; }
+          .nav-mobile-btn { display: flex !important; }
+          .page-pad { padding: 1.5rem 1.1rem !important; }
+          .cards-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (min-width: 641px) {
+          .nav-mobile-btn { display: none !important; }
+          .mobile-menu-overlay { display: none !important; }
+        }
       `}</style>
 
       {/* Sticky Navbar */}
       <nav style={{
-        position: 'sticky', top: 0, zIndex: 100,
+        position: 'sticky', top: 0, zIndex: 200,
         background: scrolled ? 'rgba(255,255,255,0.97)' : 'white',
         backdropFilter: 'blur(12px)',
-        padding: '0 2rem', height: '64px',
+        padding: '0 1.25rem', height: '60px',
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         boxShadow: scrolled ? '0 2px 20px rgba(0,0,0,0.08)' : '0 1px 0 #f0ece6',
         transition: 'box-shadow 0.3s',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }} onClick={() => router.push('/')}>
-          <div style={{ width: '32px', height: '32px', background: '#2d5a2d', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: '32px', height: '32px', background: '#2d5a2d', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
             <span style={{ color: 'white', fontSize: '16px' }}>🏠</span>
           </div>
-          <span style={{ fontSize: '1.3rem', fontWeight: '800', color: '#1a2e1a', letterSpacing: '-0.5px' }}>RentX</span>
+          <span style={{ fontSize: '1.25rem', fontWeight: '800', color: '#1a2e1a', letterSpacing: '-0.5px' }}>RentX</span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 0.75rem', background: '#f0f7f0', borderRadius: '20px' }}>
-            <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#2d5a2d', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '11px', fontWeight: 'bold' }}>
+
+        {/* Desktop nav */}
+        <div className="nav-desktop" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.3rem 0.7rem', background: '#f0f7f0', borderRadius: '20px' }}>
+            <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: '#2d5a2d', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '11px', fontWeight: 'bold' }}>
               {user?.name?.[0]?.toUpperCase()}
             </div>
-            <span style={{ color: '#2d5a2d', fontSize: '0.85rem', fontWeight: '600' }}>{user?.name?.split(' ')[0]}</span>
+            <span style={{ color: '#2d5a2d', fontSize: '0.82rem', fontWeight: '600' }}>{user?.name?.split(' ')[0]}</span>
           </div>
-          <button onClick={() => router.push('/')} style={{ padding: '0.45rem 1rem', border: '1.5px solid #2d5a2d', borderRadius: '8px', background: 'transparent', color: '#2d5a2d', fontWeight: '700', cursor: 'pointer', fontSize: '0.85rem' }}>Browse Listings</button>
-          <button onClick={() => router.push('/profile')} style={{ padding: '0.45rem 1rem', border: '1.5px solid #ddd', borderRadius: '8px', background: 'transparent', color: '#555', fontWeight: '600', cursor: 'pointer', fontSize: '0.85rem' }}>Profile</button>
-          <button onClick={handleSignOut} style={{ padding: '0.45rem 1rem', border: '1.5px solid #1a2e1a', borderRadius: '8px', background: 'transparent', color: '#1a2e1a', fontWeight: '700', cursor: 'pointer', fontSize: '0.85rem' }}>Sign Out</button>
+          <button onClick={() => router.push('/')} style={{ padding: '0.4rem 0.9rem', border: '1.5px solid #2d5a2d', borderRadius: '8px', background: 'transparent', color: '#2d5a2d', fontWeight: '700', cursor: 'pointer', fontSize: '0.82rem', fontFamily: 'Georgia, serif' }}>Browse Listings</button>
+          <button onClick={() => router.push('/profile')} style={{ padding: '0.4rem 0.9rem', border: '1.5px solid #ddd', borderRadius: '8px', background: 'transparent', color: '#555', fontWeight: '600', cursor: 'pointer', fontSize: '0.82rem', fontFamily: 'Georgia, serif' }}>Profile</button>
+          <button onClick={handleSignOut} style={{ padding: '0.4rem 0.9rem', border: '1.5px solid #1a2e1a', borderRadius: '8px', background: 'transparent', color: '#1a2e1a', fontWeight: '700', cursor: 'pointer', fontSize: '0.82rem', fontFamily: 'Georgia, serif' }}>Sign Out</button>
         </div>
+
+        {/* Mobile hamburger */}
+        <button className="nav-mobile-btn" onClick={() => setMenuOpen(!menuOpen)}
+          style={{ display: 'none', background: 'transparent', border: 'none', cursor: 'pointer', padding: '0.25rem', flexDirection: 'column', gap: '5px', alignItems: 'flex-end' }}>
+          <span style={{ display: 'block', width: '22px', height: '2px', background: '#1a2e1a', borderRadius: '2px', transition: 'all 0.2s', transform: menuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none' }} />
+          <span style={{ display: 'block', width: '16px', height: '2px', background: '#1a2e1a', borderRadius: '2px', opacity: menuOpen ? 0 : 1, transition: 'all 0.2s' }} />
+          <span style={{ display: 'block', width: '22px', height: '2px', background: '#1a2e1a', borderRadius: '2px', transition: 'all 0.2s', transform: menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none' }} />
+        </button>
       </nav>
 
-      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '2.5rem 2rem' }}>
+      {/* Mobile dropdown */}
+      {menuOpen && (
+        <div className="mobile-menu-overlay" style={{ position: 'fixed', top: '60px', left: 0, right: 0, zIndex: 199, background: 'white', borderBottom: '1px solid #f0ece6', boxShadow: '0 8px 24px rgba(0,0,0,0.1)', padding: '1rem 1.25rem', display: 'flex', flexDirection: 'column', gap: '0.6rem', animation: 'slideDown 0.2s ease both' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem', background: '#f0f7f0', borderRadius: '10px' }}>
+            <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#2d5a2d', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold' }}>
+              {user?.name?.[0]?.toUpperCase()}
+            </div>
+            <div>
+              <p style={{ margin: 0, fontWeight: '700', color: '#1a2e1a', fontSize: '0.9rem' }}>{user?.name}</p>
+              <p style={{ margin: 0, color: '#888', fontSize: '0.75rem' }}>Tenant</p>
+            </div>
+          </div>
+          <button onClick={() => { router.push('/'); setMenuOpen(false) }} style={{ padding: '0.75rem 1rem', border: '1.5px solid #2d5a2d', borderRadius: '10px', background: 'transparent', color: '#2d5a2d', fontWeight: '700', cursor: 'pointer', fontSize: '0.9rem', textAlign: 'left', fontFamily: 'Georgia, serif' }}>Browse Listings</button>
+          <button onClick={() => { router.push('/profile'); setMenuOpen(false) }} style={{ padding: '0.75rem 1rem', border: '1.5px solid #ddd', borderRadius: '10px', background: 'transparent', color: '#555', fontWeight: '600', cursor: 'pointer', fontSize: '0.9rem', textAlign: 'left', fontFamily: 'Georgia, serif' }}>Profile</button>
+          <button onClick={handleSignOut} style={{ padding: '0.75rem 1rem', border: '1.5px solid #f0ece6', borderRadius: '10px', background: 'transparent', color: '#888', fontWeight: '600', cursor: 'pointer', fontSize: '0.9rem', textAlign: 'left', fontFamily: 'Georgia, serif' }}>Sign Out</button>
+        </div>
+      )}
 
-        {/* Header */}
-        <div style={{ marginBottom: '2rem', animation: 'fadeUp 0.4s ease both' }}>
-          <h2 style={{ fontSize: '1.8rem', fontWeight: '900', color: '#1a2e1a', margin: 0, letterSpacing: '-0.5px' }}>My Interests</h2>
-          <p style={{ color: '#888', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
+      <div className="page-pad" style={{ maxWidth: '1100px', margin: '0 auto', padding: '2rem 1.5rem' }}>
+
+        <div style={{ marginBottom: '1.75rem', animation: 'fadeUp 0.4s ease both' }}>
+          <h2 style={{ fontSize: '1.6rem', fontWeight: '900', color: '#1a2e1a', margin: 0, letterSpacing: '-0.5px' }}>My Interests</h2>
+          <p style={{ color: '#888', margin: '0.2rem 0 0', fontSize: '0.85rem' }}>
             {interests.length > 0 ? `You've expressed interest in ${interests.length} propert${interests.length === 1 ? 'y' : 'ies'}` : 'Properties you express interest in will appear here'}
           </p>
         </div>
 
-        {/* Summary chips */}
         {interests.length > 0 && (
-          <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '2rem', flexWrap: 'wrap', animation: 'fadeUp 0.4s ease 0.05s both' }}>
-            <span style={{ background: '#f0f7f0', color: '#2d5a2d', padding: '0.35rem 0.85rem', borderRadius: '20px', fontSize: '0.8rem', fontWeight: '700' }}>
+          <div style={{ display: 'flex', gap: '0.6rem', marginBottom: '1.75rem', flexWrap: 'wrap', animation: 'fadeUp 0.4s ease 0.05s both' }}>
+            <span style={{ background: '#f0f7f0', color: '#2d5a2d', padding: '0.3rem 0.75rem', borderRadius: '20px', fontSize: '0.78rem', fontWeight: '700' }}>
               {interests.filter(i => i.listings?.status === 'available').length} still available
             </span>
-            <span style={{ background: '#fef2f2', color: '#dc2626', padding: '0.35rem 0.85rem', borderRadius: '20px', fontSize: '0.8rem', fontWeight: '700' }}>
+            <span style={{ background: '#fef2f2', color: '#dc2626', padding: '0.3rem 0.75rem', borderRadius: '20px', fontSize: '0.78rem', fontWeight: '700' }}>
               {interests.filter(i => i.listings?.status === 'rented').length} rented
             </span>
           </div>
         )}
 
-        {/* Empty state */}
         {interests.length === 0 && (
-          <div style={{ background: 'white', borderRadius: '20px', padding: '5rem 2rem', textAlign: 'center', border: '2px dashed #e8e4de', animation: 'fadeUp 0.4s ease 0.05s both' }}>
-            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🔍</div>
-            <h4 style={{ color: '#1a2e1a', fontSize: '1.3rem', fontWeight: '800', margin: '0 0 0.5rem' }}>No interests yet</h4>
-            <p style={{ color: '#888', marginBottom: '1.5rem', fontSize: '0.95rem' }}>Browse listings and tap "I'm Interested" on homes you like</p>
-            <button onClick={() => router.push('/')} style={{ padding: '0.75rem 2rem', background: '#2d5a2d', color: 'white', border: 'none', borderRadius: '10px', fontWeight: '800', cursor: 'pointer', fontSize: '0.95rem', fontFamily: 'Georgia, serif' }}>
+          <div style={{ background: 'white', borderRadius: '18px', padding: '4rem 1.5rem', textAlign: 'center', border: '2px dashed #e8e4de', animation: 'fadeUp 0.4s ease 0.05s both' }}>
+            <div style={{ fontSize: '3.5rem', marginBottom: '0.75rem' }}>🔍</div>
+            <h4 style={{ color: '#1a2e1a', fontSize: '1.2rem', fontWeight: '800', margin: '0 0 0.4rem' }}>No interests yet</h4>
+            <p style={{ color: '#888', marginBottom: '1.25rem', fontSize: '0.9rem' }}>Browse listings and tap "I'm Interested" on homes you like</p>
+            <button onClick={() => router.push('/')} style={{ padding: '0.7rem 1.75rem', background: '#2d5a2d', color: 'white', border: 'none', borderRadius: '10px', fontWeight: '800', cursor: 'pointer', fontSize: '0.9rem', fontFamily: 'Georgia, serif' }}>
               Browse Listings
             </button>
           </div>
         )}
 
-        {/* Interest cards */}
         {interests.length > 0 && (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.25rem' }}>
+          <div className="cards-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.1rem' }}>
             {interests.map((interest, idx) => {
               const listing = interest.listings
               const landlord = listing?.users
               const isAvailable = listing?.status === 'available'
               return (
                 <div key={interest.id} className="interest-card" style={{ background: 'white', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 2px 16px rgba(0,0,0,0.06)', border: '1px solid #f5f2ee', animation: `fadeUp 0.4s ease ${idx * 0.06}s both` }}>
-                  {/* Photo */}
-                  <div style={{ height: '190px', background: '#e8e4de', overflow: 'hidden', position: 'relative', cursor: 'pointer' }} onClick={() => router.push(`/listings/${listing?.id}`)}>
+                  <div style={{ height: '185px', background: '#e8e4de', overflow: 'hidden', position: 'relative', cursor: 'pointer' }} onClick={() => router.push(`/listings/${listing?.id}`)}>
                     {listing?.listing_photos?.[0] ? (
-                      <img src={listing.listing_photos[0].photo_url} alt={listing.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s', filter: !isAvailable ? 'grayscale(0.3)' : 'none' }}
-                        onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.04)')}
-                        onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')} />
+                      <img src={listing.listing_photos[0].photo_url} alt={listing.title} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: !isAvailable ? 'grayscale(0.3)' : 'none' }} />
                     ) : (
                       <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#bbb', gap: '0.5rem' }}>
                         <span style={{ fontSize: '2.5rem' }}>🏠</span>
                         <span style={{ fontSize: '0.78rem' }}>No photo</span>
                       </div>
                     )}
-                    {/* Gradient */}
-                    <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '80px', background: 'linear-gradient(to top, rgba(0,0,0,0.4), transparent)', pointerEvents: 'none' }} />
-                    {/* Status badge */}
-                    <span style={{ position: 'absolute', top: '0.75rem', right: '0.75rem', padding: '0.2rem 0.65rem', borderRadius: '20px', fontSize: '0.7rem', fontWeight: '800', background: isAvailable ? '#4ade80' : '#f87171', color: isAvailable ? '#0f1e0f' : 'white', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                    <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '70px', background: 'linear-gradient(to top, rgba(0,0,0,0.4), transparent)', pointerEvents: 'none' }} />
+                    <span style={{ position: 'absolute', top: '0.6rem', right: '0.6rem', padding: '0.18rem 0.55rem', borderRadius: '20px', fontSize: '0.65rem', fontWeight: '800', background: isAvailable ? '#4ade80' : '#f87171', color: isAvailable ? '#0f1e0f' : 'white', textTransform: 'uppercase' }}>
                       {isAvailable ? 'Available' : 'Rented'}
                     </span>
-                    {/* Interest confirmed badge */}
-                    <span style={{ position: 'absolute', top: '0.75rem', left: '0.75rem', padding: '0.2rem 0.65rem', borderRadius: '20px', fontSize: '0.7rem', fontWeight: '800', background: 'rgba(0,0,0,0.55)', color: 'white', backdropFilter: 'blur(4px)' }}>
+                    <span style={{ position: 'absolute', top: '0.6rem', left: '0.6rem', padding: '0.18rem 0.55rem', borderRadius: '20px', fontSize: '0.65rem', fontWeight: '800', background: 'rgba(0,0,0,0.55)', color: 'white' }}>
                       ✓ Interested
                     </span>
-                    {/* Price */}
-                    <div style={{ position: 'absolute', bottom: '0.75rem', left: '0.75rem' }}>
-                      <span style={{ color: 'white', fontWeight: '900', fontSize: '1.15rem', letterSpacing: '-0.5px', textShadow: '0 1px 4px rgba(0,0,0,0.4)' }}>${listing?.price}<span style={{ fontSize: '0.72rem', opacity: 0.85, fontWeight: '600' }}>/mo</span></span>
+                    <div style={{ position: 'absolute', bottom: '0.6rem', left: '0.6rem' }}>
+                      <span style={{ color: 'white', fontWeight: '900', fontSize: '1.1rem', textShadow: '0 1px 4px rgba(0,0,0,0.4)' }}>${listing?.price}<span style={{ fontSize: '0.7rem', opacity: 0.85 }}>/mo</span></span>
                     </div>
                   </div>
 
-                  {/* Card body */}
-                  <div style={{ padding: '1.1rem 1.25rem' }}>
-                    <h4 style={{ margin: '0 0 0.25rem', color: '#1a2e1a', fontWeight: '800', fontSize: '0.95rem', letterSpacing: '-0.3px', cursor: 'pointer' }} onClick={() => router.push(`/listings/${listing?.id}`)}>
+                  <div style={{ padding: '1rem 1.1rem' }}>
+                    <h4 style={{ margin: '0 0 0.2rem', color: '#1a2e1a', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer' }} onClick={() => router.push(`/listings/${listing?.id}`)}>
                       {listing?.title}
                     </h4>
-                    <p style={{ margin: '0 0 0.8rem', color: '#888', fontSize: '0.8rem' }}>📍 {listing?.location}</p>
+                    <p style={{ margin: '0 0 0.75rem', color: '#888', fontSize: '0.78rem' }}>📍 {listing?.location}</p>
 
-                    {/* Property details */}
-                    <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '0.9rem', paddingBottom: '0.9rem', borderBottom: '1px solid #f5f2ee' }}>
-                      <span style={{ color: '#555', fontSize: '0.78rem' }}>🛏 <strong style={{ color: '#1a2e1a' }}>{listing?.bedrooms === 0 ? 'Studio' : listing?.bedrooms} bed</strong></span>
-                      <span style={{ color: '#555', fontSize: '0.78rem' }}>🚿 <strong style={{ color: '#1a2e1a' }}>{listing?.bathrooms} bath</strong></span>
+                    <div style={{ display: 'flex', gap: '0.6rem', marginBottom: '0.8rem', paddingBottom: '0.8rem', borderBottom: '1px solid #f5f2ee' }}>
+                      <span style={{ color: '#555', fontSize: '0.75rem' }}>🛏 <strong style={{ color: '#1a2e1a' }}>{listing?.bedrooms === 0 ? 'Studio' : listing?.bedrooms} bed</strong></span>
+                      <span style={{ color: '#555', fontSize: '0.75rem' }}>🚿 <strong style={{ color: '#1a2e1a' }}>{listing?.bathrooms} bath</strong></span>
                     </div>
 
-                    {/* Landlord contact — the key feature */}
-                    <div style={{ background: '#f8f9fa', borderRadius: '10px', padding: '0.85rem 1rem', border: '1px solid #f0ece6' }}>
-                      <p style={{ margin: '0 0 0.4rem', fontSize: '0.72rem', fontWeight: '700', color: '#888', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Landlord Contact</p>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.5rem' }}>
-                        <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#2d5a2d', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '0.7rem', fontWeight: '800', flexShrink: 0 }}>
+                    <div style={{ background: '#f8f9fa', borderRadius: '10px', padding: '0.8rem', border: '1px solid #f0ece6' }}>
+                      <p style={{ margin: '0 0 0.4rem', fontSize: '0.68rem', fontWeight: '700', color: '#888', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Landlord Contact</p>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', marginBottom: '0.5rem' }}>
+                        <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: '#2d5a2d', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '0.68rem', fontWeight: '800', flexShrink: 0 }}>
                           {landlord?.name?.[0]?.toUpperCase() || '?'}
                         </div>
-                        <div>
-                          <p style={{ margin: 0, fontWeight: '700', color: '#1a2e1a', fontSize: '0.85rem' }}>
-                            {landlord?.name || 'Unknown'}
-                            {landlord?.verified && <span style={{ marginLeft: '0.35rem', fontSize: '0.65rem', color: '#2d5a2d', fontWeight: '800' }}>✓ Verified</span>}
-                          </p>
-                        </div>
+                        <p style={{ margin: 0, fontWeight: '700', color: '#1a2e1a', fontSize: '0.82rem' }}>
+                          {landlord?.name || 'Unknown'}
+                          {landlord?.verified && <span style={{ marginLeft: '0.3rem', fontSize: '0.62rem', color: '#2d5a2d', fontWeight: '800' }}>✓ Verified</span>}
+                        </p>
                       </div>
                       {landlord?.phone && (
-                        <a href={`tel:${landlord.phone}`} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#2d5a2d', fontSize: '0.82rem', fontWeight: '700', textDecoration: 'none', marginBottom: '0.4rem' }}>
+                        <a href={`tel:${landlord.phone}`} style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', color: '#2d5a2d', fontSize: '0.8rem', fontWeight: '700', textDecoration: 'none', marginBottom: '0.4rem' }}>
                           📞 {landlord.phone}
                         </a>
                       )}
                       {landlord?.phone && (
                         <a
                           href={`https://wa.me/${landlord.phone.replace(/\D/g, '')}?text=Hello, I'm interested in your property "${listing?.title}" on RentX. Is it still available?`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', padding: '0.4rem 0.85rem', background: '#dcfce7', color: '#16a34a', border: '1.5px solid #bbf7d0', borderRadius: '7px', fontSize: '0.75rem', fontWeight: '700', textDecoration: 'none', marginTop: '0.1rem' }}
+                          target="_blank" rel="noopener noreferrer"
+                          style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', padding: '0.38rem 0.8rem', background: '#dcfce7', color: '#16a34a', border: '1.5px solid #bbf7d0', borderRadius: '7px', fontSize: '0.72rem', fontWeight: '700', textDecoration: 'none' }}
                         >
                           💬 WhatsApp
                         </a>
